@@ -1,4 +1,4 @@
-#### NOM .................. Prénom .................. 
+#### NOM REGIS, Prénom Flavien
 
 
 ## LP MMS / 2018-2019 /Examen pratique / Persistance des données
@@ -36,6 +36,51 @@ Il est strictement interdit de modifier le code contenu dans les classes de test
 2. Lancez l'ensemble des tests est vérifiez que tous les tests passent exceptés ceux de la classe _"ZEvaluationM2DLTest"_.
 
 Récupérez le contenu du fichier ENONCE.md disponible à l'URL fourni par votre enseignant et insérez le à la suite de ce fichier 
+
+### Introduction
+
+Récupérez le contenu du fichier _"ZEvaluationLPMMSTest.java"_ disponible à l'adresse suivante et insérez le dans votre fichier  _"ZEvaluationLPMMSTest.java"_.
+Étudiez le code de la classe _"ZEvaluationLPMMSTest"_.
+Votre travail consistera à faire en sorte que tous les tests commentés de cette classe passent en plus de tous les autres.
+
+### Partie 1 - Gestion améliorée de la sauvegarde des objets métiers (7 points)
+
+Cette partie vise à évaluer votre capacité à faire un bon usage de la méthode _"EntityManager.merge(...)"_.
+
+1. Décommentez le test _"testSaveDetachedEnterprise"_ et modifiez le code principal de votre application pour faire en sorte que le test "_testSaveDetachedEnterprise_" passe. 
+Vérifiez que l'ensemble des tests passent toujours. Si ce n'est pas le cas, modifiez votre code jusqu'à obtenir l'ensemble des tests au vert.
+2. La méthode *"EnterpriseProjectService.save(Project project)"* contient l'instruction *"entityManager.flush()"*. En étudiant la documentation de l'API JPA, décrivez quelle garantie apporte cette instruction pour le bon fonctionnement de la méthode.
+
+    _// A COMPLETER_
+	Cette méthode garantie que le contexte de persistence sera synchronisé avec la base de données.
+
+3. Décommentez le test _"testSaveDetachedProject"_ et modifiez le code principal de votre application pour faire en sorte que le test _"testSaveDetachedProject"_ passe. 
+Vérifiez que l'ensemble des tests passent toujours. Si ce n'est pas le cas, modifiez votre code jusqu'à obtenir l'ensemble des tests au vert.
+
+ 
+### Partie 2. Gestion du changement d'entreprise d'un projet (6 points)
+
+1. Décommentez le test _"testSaveOfProjectAfterEnterpriseSwitch"_ et modifiez le code principal de votre application pour faire en sorte que le test _"testSaveOfProjectAfterEnterpriseSwitch"_ passe. 
+Vérifiez que l'ensemble des tests passent toujours. Si ce n'est pas le cas, modifiez votre code jusqu'à obtenir l'ensemble des tests au vert.    
+2. Le test _"testSaveOfProjectAfterEnterpriseSwitch"_ contient l'assertion suivante  : _"assertThat(savedProject, is(project))"_. 
+Que pouvez vous en déduire sur le comportement de la méthode "merge" ?
+
+    _// A COMPLETER_
+	Merge permet de recuperer un abojet d'un autre contexte, et le copie dans le contexte actuel avec les même information.
+
+### Partie 3. Optimistic locking (7 points)
+
+1. Étudiez la documentation de l'annotation _"jaxa.persistence.Version"_ de l'API JPA.
+2. Décommentez le test _"testProjectsAreVersionned"_ et modifiez le code principal de votre application pour faire en sorte que le test _"testProjectsAreVersionned"_ passe. 
+Vérifiez que l'ensemble des tests passent toujours. Si ce n'est pas le cas, modifiez votre code jusqu'à obtenir l'ensemble des tests au vert. 
+3. Décommentez le test _"testOptimisticLockingOnConcurrentProjectModification"_ et modifiez, si nécessaire, le code principal de votre application pour faire en sorte que le test _"testOptimisticLockingOnConcurrentProjectModification"_ passe. 
+Vérifiez que l'ensemble des tests passent toujours. Si ce n'est pas le cas, modifiez votre code jusqu'à obtenir l'ensemble des tests au vert.
+4. Expliquez clairement, en français, ce qui se passe dans le test _"testOptimisticLockingOnConcurrentProjectModification"_.
+
+    _// A COMPLETER_
+	On recupere le projet 1 de l'entreprise 1.
+	Une requette change la version de l'entreprise.
+	Quand l'entityManager modifie l'objet il remarque que la version est différente et jette l'erreur OptimisticLockException pour notifier qu'une valeur a été modifier mais ce n'est pas lui qui a fait la modification.
 
 
 

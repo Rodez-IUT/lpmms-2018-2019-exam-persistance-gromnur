@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -16,18 +18,21 @@ public class EnterpriseProjectService {
     private EntityManager entityManager;
 
     public Project saveProjectForEnterprise(Project project, Enterprise enterprise) {
-        saveEnterprise(enterprise);
-        project.setEnterprise(enterprise);
-        enterprise.addProject(project);
-        entityManager.persist(project);
+        Enterprise ancienneEnt = project.getEnterprise();
+        Enterprise ent = saveEnterprise(enterprise);
+        project.setEnterprise(ent);
+        Project p = entityManager.merge(project);
+        ent.addProject(p);
+        entityManager.persist(p);
         entityManager.flush();
-        return project;
+        return p;
     }
 
     public Enterprise saveEnterprise(Enterprise enterprise) {
-        entityManager.persist(enterprise);
+        Enterprise e = entityManager.merge(enterprise); 
+        entityManager.persist(e);
         entityManager.flush();
-        return enterprise;
+        return e;
     }
 
     public Project findProjectById(Long id) {

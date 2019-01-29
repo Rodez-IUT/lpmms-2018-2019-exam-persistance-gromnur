@@ -85,4 +85,11 @@ public class Enterprise {
         projects.add(project);
     }
 
+    public void remove(Project project) {
+       for (Project p : projects) {
+           if (p.getId() == project.getId()) {
+               projects.remove(p);
+           }
+       }
+    }
 }
